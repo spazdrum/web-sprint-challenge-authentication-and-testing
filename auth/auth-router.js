@@ -2,7 +2,7 @@ const router = require("express").Router();
 const db = require("./auth-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const secret = require("./secret");
+const secret = require("../config/secret");
 
 router.post("/register", valUser, (req, res) => {
   // implement registration
