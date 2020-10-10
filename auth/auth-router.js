@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("./secret");
 
-router.post("/register", (req, res) => {
+router.post("/register", valUser, (req, res) => {
   // implement registration
   const { username, password } = req.body;
   const rounds = process.env.BCRYPT_ROUNDS || 4;
@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
     });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", genToken, (req, res) => {
   // implement login
   const { username, password } = req.body;
 
@@ -36,4 +36,26 @@ router.post("/login", (req, res) => {
     });
 });
 
+function valUser(req, res, next) {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    res.status(401).json({ message: "Please provide username and password" });
+  } else {
+    next();
+  }
+}
+
+function genToken(req, res, next) {
+  const payload = {
+    id: user.id,
+    user: user.username,
+  };
+
+  const options = {
+    expiresIn: 60 * 60 * 1000, // 1 Hour
+  };
+
+  return jwt.sign(payload, secret.jwtSecret, options);
+}
 module.exports = router;
