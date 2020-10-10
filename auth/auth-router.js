@@ -11,7 +11,7 @@ router.post("/register", valUser, (req, res) => {
 
   db.add({ username, password: bcrypt.hashSync(password, rounds) })
     .then((user) => {
-      const token = generateToken(user);
+      const token = genToken(user);
       res.status(201).json({ message: `Welcome ${username}`, token });
     })
     .catch((err) => {
