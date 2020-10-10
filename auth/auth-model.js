@@ -18,6 +18,6 @@ function findBy(username) {
   return db("users").where({ username }).first();
 }
 
-function findById() {
-    return db('users')
+function findById(id) {
+  return db("users").where({ id }).first();
 }

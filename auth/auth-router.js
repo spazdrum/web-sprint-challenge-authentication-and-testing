@@ -11,9 +11,11 @@ router.post("/register", valUser, (req, res) => {
 
   db.add({ username, password: bcrypt.hashSync(password, rounds) })
     .then((user) => {
+      const token = generateToken(user);
       res.status(201).json({ message: `Welcome ${username}`, token });
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({ message: "Error adding new user" });
     });
 });
@@ -46,7 +48,7 @@ function valUser(req, res, next) {
   }
 }
 
-function genToken(req, res, next) {
+function genToken(user) {
   const payload = {
     id: user.id,
     user: user.username,
