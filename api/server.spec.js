@@ -16,4 +16,14 @@ describe("server.js", () => {
       expect(res.type).toBe("application/json");
     });
   });
+
+  describe("Register new user", () => {
+    it("Should return status 201 when adding new users", async () => {
+      await db("users").truncate();
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send(testUser);
+      expect(res.status).toBe(201);
+    });
+  });
 });
