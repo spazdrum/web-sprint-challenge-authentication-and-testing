@@ -38,5 +38,11 @@ describe("server.js", () => {
       const res = await request(server).post("/api/auth/login").send(testUser);
       expect(res.status).toBe(200);
     });
+    it("Should return 401 with invalid credentials", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ username: "invalid", password: "blank_space" });
+      expect(res.status).toBe(401);
+    });
   });
 });
