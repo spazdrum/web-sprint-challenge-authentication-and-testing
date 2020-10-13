@@ -32,4 +32,11 @@ describe("server.js", () => {
       expect(res.status).toBe(500);
     });
   });
+
+  describe("login with user", () => {
+    it("Should return status 200 with test user", async () => {
+      const res = await request(server).post("/api/auth/login").send(testUser);
+      expect(res.status).toBe(200);
+    });
+  });
 });
