@@ -25,5 +25,11 @@ describe("server.js", () => {
         .send(testUser);
       expect(res.status).toBe(201);
     });
+    it("Should return status 500 with invalid credentials", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send(testUser);
+      expect(res.status).toBe(500);
+    });
   });
 });
